@@ -1,0 +1,355 @@
+Oops:
+
+object oriented programming systems
+
+class -> template/buleprint of a object
+
+object -> instance of a class
+
+encapsulation -> having data and methods inside the class, to prevent/hide the data we are using inside the class + we are having the getter and setter methods, so not directly accessing and using of the data, we are having this methods, create object and use setter and getter methods.
+
+abstraction -> only show essential details hide all other details, eg: laptop, show essential details keyboard,trackpad, usb, hide all other details: Ram, harddisk, battery, cpu
+
+eg: student class,teacher class
+	student class have two methods
+		1) return name of the student
+		2) student information
+
+	so for teacher class student name is required but giving access to student information not required right
+	so we can provide the student name method and hide student information method
+
+	Interface using the essential details
+	Implements hiddent from the class
+
+Inheritance -> allows class to use data and method from another class
+
+c++:
+single inheritance one base class -> one derived class
+
+#include <iostream>
+using namespace std;
+
+// Base class
+class Shape {
+public:
+    void draw() {
+        cout << "Drawing a shape." << endl;
+    }
+};
+
+// Derived class
+class Circle : public Shape {
+public:
+    void drawCircle() {
+        cout << "Drawing a circle." << endl;
+    }
+};
+
+int main() {
+    Circle circle;
+    circle.draw(); // Accessing the base class method from the derived class
+    circle.drawCircle();
+    return 0;
+}
+
+
+multiple inheritance two base class -> one dervied class
+
+#include <iostream>
+using namespace std;
+
+// Base class 1
+class Shape {
+public:
+    void draw() {
+        cout << "Drawing a shape." << endl;
+    }
+};
+
+// Base class 2
+class Color {
+public:
+    void fill() {
+        cout << "Filling with color." << endl;
+    }
+};
+
+// Derived class
+class ColoredShape : public Shape, public Color {
+public:
+    void drawColoredShape() {
+        cout << "Drawing a colored shape." << endl;
+    }
+};
+
+int main() {
+    ColoredShape coloredShape;
+    coloredShape.draw(); // Accessing the base class methods from the derived class
+    coloredShape.fill();
+    coloredShape.drawColoredShape();
+    return 0;
+}
+
+
+hierarchical inheritance one base class -> two derived class
+
+#include <iostream>
+using namespace std;
+
+// Base class
+class Animal {
+public:
+    void makeSound() {
+        cout << "Animal makes a sound." << endl;
+    }
+};
+
+// Derived class 1
+class Dog : public Animal {
+public:
+    void makeSound() {
+        cout << "Dog barks." << endl;
+    }
+};
+
+// Derived class 2
+class Cat : public Animal {
+public:
+    void makeSound() {
+        cout << "Cat meows." << endl;
+    }
+};
+
+int main() {
+    Dog dog;
+    Cat cat;
+    dog.makeSound();
+    cat.makeSound();
+    return 0;
+}
+
+
+multilevel inheritance one base class -> one derived class -> one derived class
+
+#include <iostream>
+using namespace std;
+
+// Base class
+class Animal {
+public:
+    void eat() {
+        cout << "Animal eats." << endl;
+    }
+};
+
+// Derived class
+class Dog : public Animal {
+public:
+    void bark() {
+        cout << "Dog barks." << endl;
+    }
+};
+
+// Derived class based on the 'Dog' class
+class Bulldog : public Dog {
+public:
+    void specialBark() {
+        cout << "Bulldog barks specially." << endl;
+    }
+};
+
+int main() {
+    Bulldog bulldog;
+    bulldog.eat(); // Accessing the base class method from the derived class
+    bulldog.bark();
+    bulldog.specialBark();
+    return 0;
+}
+
+
+hybrid inhertiance -> combination of both multiple and multilevel
+
+#include <iostream>
+using namespace std;
+
+// Base class 1
+class Vehicle {
+public:
+    void drive() {
+        cout << "Vehicle is driving." << endl;
+    }
+};
+
+// Base class 2
+class Engine {
+public:
+    void start() {
+        cout << "Engine started." << endl;
+    }
+};
+
+// Derived class
+class Car : public Vehicle, public Engine {
+public:
+    void driveCar() {
+        cout << "Car is being driven." << endl;
+    }
+};
+
+int main() {
+    Car car;
+    car.start(); // Accessing the base class methods from the derived class
+    car.drive();
+    car.driveCar();
+    return 0;
+}
+
+
+Java:
+
+single:
+
+class Animal {
+    void sound() {
+        System.out.println("Animal makes a sound.");
+    }
+}
+
+class Dog extends Animal {
+    void sound() {
+        System.out.println("Dog barks.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Dog dog = new Dog();
+        dog.sound(); // Output: Dog barks.
+    }
+}
+
+multiple:
+
+interface Swimming {
+    void swim();
+}
+
+interface Flying {
+    void fly();
+}
+
+class Duck implements Swimming, Flying {
+    public void swim() {
+        System.out.println("Duck swims.");
+    }
+
+    public void fly() {
+        System.out.println("Duck flies.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Duck duck = new Duck();
+        duck.swim(); // Output: Duck swims.
+        duck.fly();  // Output: Duck flies.
+    }
+}
+
+multilevel:
+
+class Vehicle {
+    void drive() {
+        System.out.println("Vehicle is being driven.");
+    }
+}
+
+class Car extends Vehicle {
+    void honk() {
+        System.out.println("Car honks.");
+    }
+}
+
+class SportsCar extends Car {
+    void accelerate() {
+        System.out.println("Sports car accelerates.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        SportsCar sportsCar = new SportsCar();
+        sportsCar.drive();     // Output: Vehicle is being driven.
+        sportsCar.honk();      // Output: Car honks.
+        sportsCar.accelerate(); // Output: Sports car accelerates.
+    }
+}
+
+Hierarchical:
+
+class Shape {
+    void draw() {
+        System.out.println("Drawing a shape.");
+    }
+}
+
+class Circle extends Shape {
+    void draw() {
+        System.out.println("Drawing a circle.");
+    }
+}
+
+class Rectangle extends Shape {
+    void draw() {
+        System.out.println("Drawing a rectangle.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Circle circle = new Circle();
+        circle.draw(); // Output: Drawing a circle.
+
+        Rectangle rectangle = new Rectangle();
+        rectangle.draw(); // Output: Drawing a rectangle.
+    }
+}
+
+Hybrid:
+
+interface Swimming {
+    void swim();
+}
+
+interface Flying {
+    void fly();
+}
+
+class Bird {
+    void makeSound() {
+        System.out.println("Bird makes a sound.");
+    }
+}
+
+class Duck extends Bird implements Swimming, Flying {
+    public void swim() {
+        System.out.println("Duck swims.");
+    }
+
+    public void fly() {
+        System.out.println("Duck flies.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Duck duck = new Duck();
+        duck.makeSound(); // Output: Bird makes a sound.
+        duck.swim();      // Output: Duck swims.
+        duck.fly();       // Output: Duck flies.
+    }
+}
+
+
+polymorphism -> static -> compile time, method overloading based on arguments
+				dynamic -> run time, super class methods, subclass extends superclass methods, but each class have same function means at runtime what class is executing at that time that method/function will be taken

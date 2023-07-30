@@ -1,0 +1,100 @@
+1) Scaling:
+	* Horizontal
+	* Vertical
+
+scaling, means scaling over application either by the application performance or by the storage capacity of the application i.e via cpu or by the memory
+
+scaling comes with two parts:
+vertical and horizontal: 
+
+vertical scaling means just increase the cpu and memory on the already existing application, but there will be some pros and cons in it, vertical scaling just increate the cpu and memory thats it, for example you may be need of the memory 512 mb extra but service provider can offer 2gb only that remain 1.5 gb waste no use like that
+
+horizontal scaling just increase the application server itslef like do the copy of the existing one  i.e replica, now your application can have two same services with same cpu and same memory i.e replica all you need to do is replica of the data between the newly created server and already existed service, you can use load balancer for it, eg: now you have two service if there is so much traffic load balancer can switch the traffic to other service also
+
+but vertical or horizontal based upon your work only
+
+
+	* Stateless
+	* Statefull
+
+stateless - stateless meaning it does not store any previous request, eg: http, request and response will happen but keeping the track of the service that client uses does not store on the server side
+
+statefull - statefull meaning store or keep track of client information on the server, eg: https, request and response will happen but it will store all the user information like cookie and session storage what they are doing in the site 
+we can have a track record of the user
+
+2) Scaling database:
+	What can we do when database goes down
+	* cold standby
+		we can have cold standby that is periodic backup
+		manually restore the database but we have downtime for the users and might lose some data
+	* warm standy
+		we can have replica i.e backup of database, do copyup of data from the primary database
+		but this one also seems doubtful, what if the primary database goes down and the replica database remains single point of failure, if the backup goes down thats it, we again move to cold standy
+	* Hot standby
+		we have the sharding database i.e horizontal scaling in the database 
+
+Normalize vs Denormalize
+	Normalization:
+		* process of organizing the data in database to reduce redudancy and improve data integrity
+		* Goal is to break down single large table into simple small unit of tables with pass of primary key to foriegn key
+		* To reduce data duplication we can ensure that each peice of information is stored at one time
+
+	Denormalization:
+		* same like normalization but lets say we have three tables 1st table pk will be 2nd table fk and in 3rd we are having two fk i.e 1st table and 2nd table pk, why because during normalization process we need to do joins to join the table and need to get the values and it gives some time unwanted data, but with this denormalization we can get exact data
+
+	1NF:
+		each table should have one value
+		for eg: if user 14 have two phone numbers means we need to have user 14 in two steps
+
+	2NF (1NF applied):
+		what if user 14 is primary key, It does not need to repeated right, so I need to create different table to solve this
+		applying pk and fk
+
+	3NF(1NF and 2NF applied):
+		What if the table contains two pk
+		eg: userId userName userZip userState userCity
+		userId represent userName, so userId is pk
+		userZip represent userState and userCity , so userZip is pk
+
+		so put userId and userName one table and userId as PK
+		then put userZip, userState, userCity as another table and userID as FK and userZip as PK
+
+	BCNF (boyce codd):
+		check reverse of the table
+
+	4NF(same apply 1,2,3,boyce codd):
+		dont use two values with one pk
+		eg: studentID course hobby 
+		change to studentID course
+				  studentID hobby
+
+	5NF (same apply all):
+		* table needs to follow joins
+
+ACID
+	Atomicity
+		- entire transacition success or entire things needs to fail
+	consistency
+		- all database rule  enforced or the entire transaction is roll back
+	isolation
+		- no transaction affected by any other transaction
+	durability
+		- once transaction is completed it needs to stay event the system crash happens
+
+CAP
+	* consistency
+		all nodes in the distributed system need to have the same data
+	* availability
+		system remains responsive and accessible even after any node failure
+	* tolerance
+		communication/handle network of failure between nodes
+Caching
+	* Eviction policy
+Resiliency
+	- we need to plan what happens at the failure newer node ready to handle all traffic
+Distributed storage solution
+	- s3 , service level agreement
+
+---
+
+scaling, database, load balancer, cdn, caching, IP address, DNS, Rest, Graphql, GRPC, web socket, Mysql (ACID), Sharding, replication, CAP theorem, Message queues.

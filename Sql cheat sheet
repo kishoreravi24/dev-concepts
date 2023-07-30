@@ -1,0 +1,213 @@
+Sql cheat sheet
+
+Querying
+
+1) select * from country;
+2) select id,name from country;
+3) select name from city order by rating asc;
+4) select name from city order by rating desc;
+
+Aliases
+
+1) select name as city_name from city;
+
+Filtering the output
+
+1) select name from city where rating > 3;
+2) select name from city where name like 'P%' //start with P
+3) select name from city where name like '%S' //end with S
+
+Other operations
+
+1) select name from city where rating is NOT NULL;
+2) select name from city where population between 50000 and 1000000;
+3) select name from city where country_id in (1,4,5,8);
+
+
+Operator               	Condition                                       		SQL Example
+=, !=, <, <=, >, >=     Standard numerical operators           					col_name != 4
+BETWEEN ... AND ...    	Number is within range of two values (inclusive)   		col_name BETWEEN 1.5 AND 10.5
+NOT BETWEEN ... AND ... Number is not within range of two values (inclusive) 	col_name NOT BETWEEN 1 AND 10
+IN (...)                Number exists in a list                     			col_name IN (2, 4, 6)
+NOT IN (...)            Number does not exist in a list       					col_name NOT IN (1, 3, 5)
+
+
+
+Operator   Condition                                                Example
+=          Case sensitive exact string comparison                  col_name = "abc"
+!= or <>   Case sensitive exact string inequality comparison       col_name != "abcd"
+LIKE       Case insensitive exact string comparison                col_name LIKE "ABC"
+NOT LIKE   Case insensitive exact string inequality comparison     col_name NOT LIKE "ABCD"
+%          Used anywhere in a string to match a sequence of zero 
+           or more characters (only with LIKE or NOT LIKE)          col_name LIKE "%AT%" 
+           (matches "AT", "ATTIC", "CAT" or even "BATS")
+_          Used anywhere in a string to match a single character 
+           (only with LIKE or NOT LIKE)                            col_name LIKE "AN_" 
+           (matches "AND", but not "AN")
+IN (…)     String exists in a list                                 col_name IN ("A", "B", "C")
+NOT IN (…) String does not exist in a list                         col_name NOT IN ("D", "E", "F")
+
+distinct - no duplicates
+offset - number of rows to skip
+
+SELECT city, latitude FROM north_american_cities
+WHERE country = "United States"
+ORDER BY latitude DESC;
+
+
+Joins
+
+Inner join
+
+Inner join is a process that matches rows from first table and second table which have the same key to create a result row, that combined columns for both tables.
+
++--------+----------+---------------+
+| emp_id | emp_name | department_id |
++--------+----------+---------------+
+| 1      | John     | 101           |
+| 2      | Jane     | 102           |
+| 3      | Bob      | 101           |
+| 4      | Alice    | NULL          |
++--------+----------+---------------+
+
++---------------+-----------------+
+| department_id | department_name |
++---------------+-----------------+
+| 101           | HR              |
+| 102           | IT              |
+| 103           | Sales           |
++---------------+-----------------+
+
+SELECT emp.emp_id, emp.emp_name, emp.department_id, dept.department_name
+FROM employees emp
+INNER JOIN departments dept
+ON emp.department_id = dept.department_id;
+
+
++--------+----------+---------------+-----------------+
+| emp_id | emp_name | department_id | department_name |
++--------+----------+---------------+-----------------+
+| 1      | John     | 101           | HR              |
+| 2      | Jane     | 102           | IT              |
+| 3      | Bob      | 101           | HR              |
++--------+----------+---------------+-----------------+
+
+
+Left join
+//Return all rows from the left table with corresponding rows from the right table.
+
++--------+----------+---------------+
+| emp_id | emp_name | department_id |
++--------+----------+---------------+
+| 1      | John     | 101           |
+| 2      | Jane     | 102           |
+| 3      | Bob      | 101           |
+| 4      | Alice    | NULL          |
++--------+----------+---------------+
+
++---------------+-----------------+
+| department_id | department_name |
++---------------+-----------------+
+| 101           | HR              |
+| 102           | IT              |
+| 103           | Sales           |
++---------------+-----------------+
+
+SELECT emp.emp_id, emp.emp_name, emp.department_id, dept.department_name
+FROM employees emp
+LEFT JOIN departments dept
+ON emp.department_id = dept.department_id;
+
++--------+----------+---------------+-----------------+
+| emp_id | emp_name | department_id | department_name |
++--------+----------+---------------+-----------------+
+| 1      | John     | 101           | HR              |
+| 2      | Jane     | 102           | IT              |
+| 3      | Bob      | 101           | HR              |
+| 4      | Alice    | NULL          | NULL            |
++--------+----------+---------------+-----------------+
+
+
+ Right join
+ //Reverse of left join
+
+ +--------+----------+---------------+
+| emp_id | emp_name | department_id |
++--------+----------+---------------+
+| 1      | John     | 101           |
+| 2      | Jane     | 102           |
+| 3      | Bob      | 101           |
+| 4      | Alice    | NULL          |
++--------+----------+---------------+
+
++---------------+-----------------+
+| department_id | department_name |
++---------------+-----------------+
+| 101           | HR              |
+| 102           | IT              |
+| 103           | Sales           |
++---------------+-----------------+
+
+SELECT emp.emp_id, emp.emp_name, emp.department_id, dept.department_name
+FROM employees emp
+RIGHT JOIN departments dept
+ON emp.department_id = dept.department_id;
+
++--------+----------+---------------+-----------------+
+| emp_id | emp_name | department_id | department_name |
++--------+----------+---------------+-----------------+
+| 1      | John     | 101           | HR              |
+| 3      | Bob      | 101           | HR              |
+| 2      | Jane     | 102           | IT              |
+| NULL   | NULL     | 103           | Sales           |
++--------+----------+---------------+-----------------+
+
+
+
+ Full join
+  includes unmatched rows from both tables, both of left and right
+
+ +--------+----------+---------------+
+| emp_id | emp_name | department_id |
++--------+----------+---------------+
+| 1      | John     | 101           |
+| 2      | Jane     | 102           |
+| 3      | Bob      | 101           |
+| 4      | Alice    | NULL          |
++--------+----------+---------------+
+
++---------------+-----------------+
+| department_id | department_name |
++---------------+-----------------+
+| 101           | HR              |
+| 102           | IT              |
+| 103           | Sales           |
++---------------+-----------------+
+
+
+SELECT emp.emp_id, emp.emp_name, emp.department_id, dept.department_name
+FROM employees emp
+FULL JOIN departments dept
+ON emp.department_id = dept.department_id;
+
+
++--------+----------+---------------+-----------------+
+| emp_id | emp_name | department_id | department_name |
++--------+----------+---------------+-----------------+
+| 1      | John     | 101           | HR              |
+| 2      | Jane     | 102           | IT              |
+| 3      | Bob      | 101           | HR              |
+| 4      | Alice    | NULL          | NULL            |
+| NULL   | NULL     | 103           | Sales           |
++--------+----------+---------------+-----------------+
+
+Expression
+
+Example query with expressions
+SELECT particle_speed / 2.0 AS half_particle_speed
+FROM physics_data
+WHERE ABS(particle_position) * 10.0 > 500;
+
+Aggregate
+SELECT MAX(years_employed) as Max_years_employed
+FROM employees;

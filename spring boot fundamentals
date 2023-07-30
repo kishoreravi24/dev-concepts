@@ -1,0 +1,165 @@
+spring boot fundamentals
+    * spring vs spring boot
+        spring:
+            * spring is a framework used to create enterprise application
+            * Basically in year 2000's if you need to create a enterprise application in Java you have to use lot of Java EE features like EJB - difficult to manage
+            * POJO vs Beans:
+                POJO - plain old java object
+                    * class is public
+                    * private properties
+                    * no argument constructor
+                    * public setter and getter methods
+                Bean - same like pojo but one additional change in serializable , serializable: convert object to byte stream for better storing.
+        spring boot:
+            * we have the embeded server in the jar file
+            * provides auto configuration
+    * Inverse of control
+        * In traditional programming we used to create a object like this
+        Service service = new Service();
+
+        IOC with spring boot:
+            * The framework takes control of object creation, lifecycle management and dependency injection.
+
+        Dependency injection:
+            how dependency injection will occur:
+                public class UserService {
+                    private EmailService emailService;
+
+                    public UserService() {
+                        // Manually create an instance of EmailService
+                        this.emailService = new EmailServiceImpl();
+                    }
+
+                    // Rest of the UserService code
+                }
+
+
+                now you can see in userService constructor i am using the emailService bean to create object
+
+                to solve this:
+
+                public class UserService {
+                    private EmailService emailService;
+
+                    @Autowired
+                    public UserService(EmailService emailService) {
+                        this.emailService = emailService;
+                    }
+
+                    // Rest of the UserService code
+                }
+
+    * Beans
+        eg:
+            public class Person {
+                private String name;
+                private int age;
+
+                public Person() {
+                    // Default constructor
+                }
+
+                // Getters and setters
+
+                public String getName() {
+                    return name;
+                }
+
+                public void setName(String name) {
+                    this.name = name;
+                }
+
+                public int getAge() {
+                    return age;
+                }
+
+                public void setAge(int age) {
+                    this.age = age;
+                }
+            }
+
+        spring beans:
+            eg:
+                import org.springframework.stereotype.Component;
+
+                @Component
+                public class UserService {
+                    public void createUser(String username, String password) {
+                        // Logic to create a user
+                    }
+                }
+
+        so @component annotation solves inversion of control i.e life cycle management and dependency injection (bean creating new object ) and spring bean (getter setter)
+
+        and @Autowired is ommitted in spring 4.3
+
+    * Hibernate and servlet mappings
+        Hibernate - ORM framework object realtional mapping simplifies database access and mapping of java object to relational database
+
+        servlet mappings :
+
+            <servlet>
+                <servlet-name>MyServlet</servlet-name>
+                <servlet-class>com.example.MyServlet</servlet-class>
+            </servlet>
+
+            <servlet-mapping>
+                <servlet-name>MyServlet</servlet-name>
+                <url-pattern>/myapp/myservlet</url-pattern>
+            </servlet-mapping>
+
+            any request made to the URL /myapp/myservlet will be directed to the MyServlet class for processing.
+
+    * Spring container:
+        It provides a runtime environment for managing and configuring Java objects, also known as beans.
+
+    * Annotations
+        @Bean:
+            The @Bean annotation is typically used in a configuration class to define custom beans programmatically. 
+
+            eg:
+
+                @Configuration
+                public class AppConfig {
+                    @Bean
+                    public UserService userService() {
+                        return new UserService();
+                    }
+                }
+
+                 @Bean is used within a configuration class to explicitly define custom beans and provides control over the bean instantiation
+
+         The @Autowired annotation is used for automatic dependency injection
+
+         But we can use @component
+
+
+        @Component scan:
+             com.package.controller ,annotated with @component, and in config i need to use the object / bean of the service mean in config i need to annotate the class with componentScan("com.package.controller") like that
+
+        @Config
+
+        @configuration
+        public class Appconfig{
+            @Bean
+            public Student studentBean(){
+                return new Student();
+            }
+        }
+
+        College college = context.getBean("collegeBean", College.class);
+
+
+        summary:
+            @Autowired is used for dependency injection, @Component marks a class as a Spring bean, @ComponentScan enables component scanning, and @Bean is used to explicitly declare custom beans within configuration classes.
+
+
+            correction:
+                * The lifecycle management of beans in Spring is handled by the container.
+                * @Component is used to mark a class as a Spring bean/component. It is not specifically related to getter/setter methods or constructors. It indicates that a class should be detected and registered as a bean by the Spring container.
+
+                * @ComponentScan is used to enable component scanning and detects classes marked with @Component
+
+                * Once the component scanning is completed, the Spring container will have a collection of detected and registered beans. These beans are then available for dependency injection and can be accessed or utilized by other parts of the application.
+
+    * DTO,DAO,SERVICES,CONTROLLERS
