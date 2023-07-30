@@ -1,0 +1,104 @@
+Networking concepts
+
+Hub: A hub is a networking device that connects multiple devices
+	working of hub:
+		* A1,A2,A3 all connected to hub, if A1 send packets to hub, hub sends the data to all connected devices
+
+Switch: A switch is also a networking device like hub, but in switch it does not send data to all connected devices, if A1 wants to send data to A3 mean it will send data to A3 only, how via mac address of the machines are keep track in the switch so, it will send data to the correct device
+
+Router: Router is also same like switch but here we use Ip address, it will check the data packet and filters the data and send it to the correct location, location meaning local area or outside.
+
+Topology:
+	Wired
+		Star - like hub or switch
+		Ring - same like star but connect like neighbours
+		Bus -  connect with T connectors main focus on T if the T misses the data flow will be distributed
+		Mesh - Best example of Internet
+	Wireless
+		Ad-hoc: peer to peer network
+
+OSI model:
+	Please do not throw sausage pizza away
+
+	physical - Raw bit of data
+	data link - Mac address, bits to frame
+	network - Routing data frames to correct IP address
+	transport - TCP/UDP
+	session - Proper communication managing & terminating sessions
+	presentation - Encryption & compression
+	application - End to End user
+
+IPv4: 2^32
+	Ip address two types:
+	eg: 126.255.255.255
+		Network prefix
+			126
+		Host identifier
+			255.255.255
+
+
+	Class A:
+		1.0.0.0 to 126.0.0.0
+		private: 10.0.0 to 10.255.255.255
+
+	class B:
+		128.0.0 to 191.255.0.0
+		private: 172.16.0.0 to 172.31.255.255
+
+	class C:
+		192.0.0.0 to 223.255.255.0
+		private: 192.168.0.0 to 192.168.255.255
+
+	class D:
+		224.0.0.0 to 239.255.255.255
+		multicast
+
+	class e:
+		240 to 255 , research purpose
+
+	Reserved IP 127.0.0.0 to 127.255.255.255
+
+IPV6: 2^128
+
+IPv4 subnet:
+
+Rules:
+1) Determine the IP class
+2) Determine the network Id and host Id
+3) Apply default subnet
+4) 255 - 8 1's
+	255 64 32 16 8 4 2 1 = 255
+	1    1 1  1  1 1 1 1
+5) Default to custom subnet
+6) LSB (least significant bit)
+
+
+eg: 172.16.0.0 I need 11 subnet works
+
+1) class B
+	172 - 191
+2) Network Id 172.16
+   Host Id 0.0
+3) Apply default subnet
+	255.255.0.0
+4) 255
+	
+	11111111.11111111.00000000.00000000
+
+5) Default to custom subnet
+	2^n-2 >= 11
+
+	2^4-2 >= 14
+	n=4
+	11111111.11111111.11110000.00000000
+
+	255 64 32 16 8 4 2 1 = 240
+	1   1  1  1  0 0 0 0
+	
+	255.255.240.0
+
+7) LSB = 16
+
+output: 172.16.16.0 = 172.16.31.255
+		172.16.32.0 = 172.16.47.255
+	
