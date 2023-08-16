@@ -1,0 +1,92 @@
+AWS, amazon web services is a cloud computing platform which provides many resources
+
+1) IAM ( Identity access management ):
+	* IAM , first when you creating a aws account you have the root access.
+	with IAM you can create users, manage groups and roles for them
+
+	* With IAM you can provide access/restriction also for the user/group, like they can access this resources and do this like that
+
+	* IAM not only for the users but also for the resources in aws
+	like eg: you can say this lambda service can access this resource
+
+2) Containers and Compute:
+	ECS (elastic cloud service)
+	ECS is a docker container with that you can run your docker image
+
+	The docker image you have two options:
+
+	* EC2 (Elastic cloud compute):
+		* you have so many list of instance types create instance type based on your application need
+		* After that you can configure the instance to ecs , from ecs you can deploy the docker image to your instance
+		* From ECS you manage the instance, monitor, metrics analysis so much you can do.
+
+		* you have spot instance and reserved instance on Ec2 
+		* spot instance - discounted price, suitable for fault tolerance, non critical workloads
+		* reserved instance - significiant cost savings, ideal for steady state and predictable workspaces
+
+	* Fargate (serverless):
+		* instead of choosing the instance type in fargate you can specify the cpu and memory requirements for your task
+		* You can pay for the cpu and memory used by your task at the time of execution
+		* mainly it focus on application deployment rather than the monitoring it
+
+3) Network:
+	VPC ( virtual private cloud )
+		* Mainly allows you to provision ec2 instance and rds database.
+		* It provide control over network settings, IP address ranges, subnets and security groups enables you to create a private secur connection
+
+	Route 53:
+		* Scalable and highly available domain name system (DNS) web services
+		* It enables you to manage and route domain names to aws resources or external endpoints
+		* route 53 offers features like domain check,health check
+
+4) Content delivery:
+	CloudFront
+		* CDN
+		* Accelerate delivery of your website, APIS, video content, static files and more
+		* Caches and distribute content across a global network mainly used on edge location
+		* Reduce latency and improve overall performance
+
+5) deployments:
+	CloudFormation
+		* You can provision your application with configurations
+		* configuration like yaml, json and much more.
+		* This helps to create infra and pass the configuration what ever the infra needed
+		* cloud formation code template/template can be version controlled, shared and reused making efficient to manage your infrastructure as code
+
+6) scale your network:
+	Elastic load balancer
+		* Elb is a service that automatically distributes incoming application or network traffic across multiple targets such as EC2 instance in multiple availability zones
+		* Elb helps to improve availability and route traffic automatically balancing the load and route traffice to healthy targets
+		* three types:
+			* classic load balancer for EC2
+			* application for http/https
+			* network for higher performance and lower latency
+
+7) Database
+	* s3 (simple storage service)
+		s3 is an object service that allows you to store and retrive any amount of data
+	* RDS
+		* postgres sql and rdbms
+	* Data lake
+		* data lake is a centeralized repository that enables the storage and analysis of structured and unstructured data at any scale.
+
+8) Analysis
+	Athena
+		* athena is a interactive query service that allows you to analayze data in s3 using standard sql queries
+		* used to gain insights
+
+9) API gateway:
+	* Api gateway is for securing, monitoring, managing, publishing and creating API's.
+
+10) ASG (auto scaling group):
+		* Asg automatically adjust the number of instances (Ec2) in a group based on the changing demand for your application or workload.
+		* Asg help maintain the desired level of application availability, performance and cost effectiviness
+		* Key features:
+			* Dynamic scaling - scales instances up or down
+			* Health checks - Asg monitors health of your instances, and replaces any unhealthy or terminated instances to ensure your application works correctly
+			* Launch configuration/templates - From this launch configuration you can launch the instance types, AMI (Amazon machine image), security groups or other configurations
+			* Availability zones, Integration with load balancers
+			* Scheduler actions - You can define scheduled scaling actions to adjust the instances count at specific times during peak hour of your application use.
+
+11) Lambda (serverless):
+		* Lambda is a function code process that executes the code and connects the aws resources if you want
