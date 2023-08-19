@@ -1,0 +1,84 @@
+React:
+
+Redux
+	state management library,
+	some simple tech terms from different blogs:
+		* It allows the react components to read the data from the redux store and dispatch action to store to update the state.
+
+		* As simple, it subscribes to react store, and checks to see if the data your components wants has changed, re-renders your component
+
+		* There is a central store to store the data of the components, each components can access the store to get the data for that they don't need to send the data as props from one component to another component
+
+	Three things in redux - Action, Store, Reducers
+
+	Actions:
+		With actions you can send data from your application to your redux store.
+		- Type and payload
+			* Type of action
+			* Payload data
+		eg:
+			  const updateData = () => {
+			    dispatch({ type: 'SET_DATA', payload: 'New Data' });
+			  };
+
+			  return (
+			    <div>
+			      <button onClick={updateData}>Update Data</button>
+			    </div>
+			  );
+
+	Reducers:
+		State change
+		eg:
+			// reducer.js
+			const initialState = {
+			  data: null,
+			};
+
+			const reducer = (state = initialState, action) => {
+			  switch (action.type) {
+			    case 'SET_DATA':
+			      return { ...state, data: action.payload };
+			    default:
+			      return state;
+			  }
+			};
+
+			export default reducer;
+
+	Store:
+		// store.js
+		import { createStore, combineReducers } from 'redux';
+		import reducer from './reducer';
+
+		const rootReducer = combineReducers({
+		  app: reducer,
+		});
+
+		const store = createStore(rootReducer);
+
+		export default store;
+
+
+		import store from './store';
+
+		ReactDOM.render(
+		  <Provider store={store}>
+		    <App />
+		  </Provider>,
+		  document.getElementById('root')
+		);
+
+
+	Access store data:
+		eg:
+		const Component = () => {
+		  const data = useSelector(state => state.app.data);
+
+		  return (
+		    <div>
+		      <h1>Data from Redux Store</h1>
+		      <p>{data}</p>
+		    </div>
+		  );
+		};
