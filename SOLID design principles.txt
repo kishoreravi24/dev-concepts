@@ -1,0 +1,190 @@
+SOLID design principles
+	Single Responsibility
+	Open closed
+	Interface
+	Liskov substution
+	Dependency inversion
+
+Single Responsibility Principle: A class should have only one reason to change, meaning it should have only one responsibility.
+
+Problem:
+
+Class Customer {
+	public void customerDetails(){
+
+	}
+
+	public void InvoidDetails(){
+
+	}
+}
+
+Solution:
+
+class Customer {
+	public void customerDetails(){
+
+	}
+}
+
+class CustomerInvoice{
+	public void InvoiceDetails(){
+
+	}
+}
+
+Open/Closed Principle: Software entities (classes, modules, functions) should be open for extension but closed for modification.
+
+Problem:
+class Discount {
+	public double customerDiscount(String type, double amount){
+		if(type.equals("Regular")){
+			return amount * 0.5;
+		}
+		if(type.equals("Vip")){
+			return amount * 0.2;
+		}
+		return 0.7;
+	}
+}
+
+
+Solution:
+
+which would need to be modified whenever a new customer type or discount rule is introduced. we can't modify the class for a change
+
+interface DiscountStrategy {
+	double calculateDiscount(double amount);
+}
+
+class RegularDiscount implements DiscountStrategy {
+	public double calculateDiscount(double amount) {
+		return amount * 0.5;
+	}
+};
+
+class VipDiscount implements DiscountStrategy {
+	public double calculateDiscount(double amount){
+		return amount * 0.2;
+	}
+};
+
+class Discount {
+	private DiscountStrategy discountStrategy;
+
+	Discount(DiscountStrategy discountStrategy){
+		this.discountStratgy = discountStrategy;
+	}
+
+	public double calculate(double amount){
+		return this.discountStrategy.calculateDiscount(amount);
+	}
+};
+
+
+
+Liskov Substitution Principle: Subtypes must be substitutable for their base types without affecting program correctness.
+
+Refer Liskov_Subtution
+
+Interface Segregation Principle: Clients should not be forced to depend on interfaces they do not use; separate interfaces for distinct client needs.
+
+Problem:
+
+interface Worker {
+	void work();
+	void eat();
+}
+
+class Construction implements Worker{
+	public void work(){
+
+	}
+
+	public void eat();
+}
+
+Solution:
+
+interface Work{
+	void work();
+}
+
+interface Eat{
+	void eat();
+}
+
+class Construction implements Work,Eat{
+	public void work(){
+
+	}
+
+	public void eat(){
+
+	}
+}
+
+Dependency Inversion Principle: High-level modules should not depend on low-level modules; both should depend on abstractions. Abstractions should not depend on details; details should depend on abstractions.
+
+Problem:
+
+class Fan {
+	public void turnOn {
+
+	}
+
+	public void turnOff {
+
+	}
+}
+
+class RemoteControl {
+	private Fan fan;
+
+	RemoteControl(){
+		fan = new Fan();
+	}
+
+	fan.turnOn();
+}
+
+Solution:
+
+interface Switch {
+	void turnOn();
+	void turnOff();
+}
+
+class Fan implements Switch {
+	public void turnOn() {
+
+	}
+
+	public void turnOff() {
+
+	}
+}
+
+class Bulb implements Switch {
+	public void turnOn() {
+
+	}
+
+	public void turnOff() {
+
+	}
+}
+
+class RemoteControl {
+	private Fan fan;
+	private Bulb bulb;
+
+	RemoteControl(){
+		fan = new Fan();
+		bulb = new bulb();
+	}
+
+	fan.turnOn();
+	bulb.turnOn();
+}
+
